@@ -11,19 +11,40 @@ func main() {
 	var fromStation string
 	var toStation string
 	var bookedTicketNumber int
-	// var remainingTicket int
-	// var totalTicket int
-	// var trainName string
-	// var seatType string
-	// var trainDestination string
-	// var trainDepartureTime string
-	// var trainArrivalTime string
-	// var ticketPrice float64
-	// var seatNumber int
-	// var seatBookedDate string
-	// var seatBookedTime string
+	var totalTicket int = 500
+	var trainName string
+	var departureTime string
 
-	// Replace the single Scan with individual prompts
+	trainDepartureTime := []string{
+		"06:15 AM",
+		"11:15 AM",
+		"03:45 PM",
+		"08:00 PM",
+		"10:30 PM",
+	}
+	trainOptions := []string{
+		"Upobon Express",
+		"Parabat Express",
+		"Egarshindur",
+		"Kishoreganj Express",
+	}
+
+	fmt.Println("\nAvailable Trains:")
+	for i := 0; i < len(trainOptions); i++ {
+		fmt.Printf("%d. %s - Departure: %s\n", i+1, trainOptions[i], trainDepartureTime[i])
+	}
+	var trainChoice int
+	fmt.Print("Select train (enter number): ")
+	fmt.Scan(&trainChoice)
+	if trainChoice >= 1 && trainChoice <= len(trainOptions) {
+		trainName = trainOptions[trainChoice-1]
+		departureTime = trainDepartureTime[trainChoice-1]
+		fmt.Printf("\nYou selected: %s\nDeparture Time: %s\n\n", trainName, departureTime)
+	} else {
+		fmt.Println("Invalid train selection. Please select a number between 1 and", len(trainOptions))
+		return
+	}
+
 	fmt.Print("Enter your name: ")
 	fmt.Scan(&userName)
 
@@ -49,6 +70,8 @@ func main() {
 	fmt.Scan(&bookedTicketNumber)
 
 	fmt.Printf("\nBooking Information:\n")
+	fmt.Printf("Train Name: %v\n", trainName)
+	fmt.Printf("Departure Time: %v\n", departureTime)
 	fmt.Printf("Name: %v\n", userName)
 	fmt.Printf("Age: %v\n", age)
 	fmt.Printf("Gender: %v\n", gender)
@@ -57,4 +80,11 @@ func main() {
 	fmt.Printf("From station: %v\n", fromStation)
 	fmt.Printf("To station: %v\n", toStation)
 	fmt.Printf("Booked ticket number: %v\n", bookedTicketNumber)
+	remainingTickets := totalTicket - bookedTicketNumber
+	if bookedTicketNumber <= totalTicket {
+		fmt.Printf("Booking successful! Remaining tickets: %v\n", remainingTickets)
+		totalTicket = remainingTickets
+	} else {
+		fmt.Printf("Sorry, only %v tickets are available\n", totalTicket)
+	}
 }
